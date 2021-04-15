@@ -8,7 +8,20 @@ final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
-PImage bg, soil8x24;
+PImage bg, soil8x24, cabbage;
+
+//soil
+PImage soil0, soil1, soil2, soil3, soil4, soil5;
+//move
+int down = 0;
+int left = 0;
+int right = 0;
+
+//groundhog
+PImage groundhogIdle, groundhogDown, groundhogLeft, groundhogRight;
+float groundhogX = 320;
+float groundhogY = 80;
+float groundhogSpeed = 15;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -26,6 +39,16 @@ void setup() {
 	restartNormal = loadImage("img/restartNormal.png");
 	restartHovered = loadImage("img/restartHovered.png");
 	soil8x24 = loadImage("img/soil8x24.png");
+  groundhogIdle = loadImage("img/groundhogIdle.png");
+  groundhogDown = loadImage("img/groundhogDown.png");
+  groundhogLeft = loadImage("img/groundhogLeft.png");
+  groundhogRight = loadImage("img/groundhogRight.png");
+  soil0 = loadImage("img/soil0.png");
+  soil1 = loadImage("img/soil1.png");
+  soil2 = loadImage("img/soil2.png");
+  soil3 = loadImage("img/soil3.png");
+  soil4 = loadImage("img/soil4.png");
+  soil5 = loadImage("img/soil5.png");
 }
 
 void draw() {
@@ -82,9 +105,25 @@ void draw() {
 		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
-		image(soil8x24, 0, 160);
+		for(int x=0; x<width; x+=80){
+      for(int y=160; y<480; y+=80){
+        image(soil0, x, y);
+      }
+      for(int y=480; y<800; y+=80){
+        image(soil1, x, y);
+      }
+    }
+    
 
 		// Player
+      //no move
+      if(down == 0 && left == 0 && right == 0){
+        image(groundhogIdle, groundhogX, groundhogY);
+      }
+      
+    //Soldier
+    
+    
 
 		// Health UI
 
@@ -121,7 +160,34 @@ void draw() {
 
 void keyPressed(){
 	// Add your moving input code here
-
+  if(down>0 || left>0 || right>0){
+    return;
+  }
+  
+  if(key == CODED){
+    switch(keyCode){
+      case DOWN:
+        break;
+        
+      case LEFT:
+        if(groundhogX > 0){
+          left = 15;
+        }
+        break;
+        
+      case RIGHT:
+        if(groundhogX < 560){
+          right = 15;
+        }
+        break;
+        
+    }
+  }
+  
+  
+  
+  
+  
 	// DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
     switch(key){
       case 'w':
