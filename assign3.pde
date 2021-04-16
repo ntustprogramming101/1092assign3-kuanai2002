@@ -8,7 +8,30 @@ final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
-PImage bg, soil8x24;
+PImage bg, soil8x24, life;
+
+//soil
+PImage soil0, soil1, soil2, soil3, soil4, soil5;
+int soilY = 160;
+int soilRange = 320;
+
+//stone
+PImage stone1, stone2;
+final int stoneCount1 = 8;
+final int stoneCount2 = 4;
+int stoneX = 0;
+int stoneY = 160;
+
+//move
+int down = 0;
+int left = 0;
+int right = 0;
+
+//groundhog
+PImage groundhogIdle, groundhogDown, groundhogLeft, groundhogRight;
+float groundhogX = 320;
+float groundhogY = 80;
+float groundhogSpeed = 1;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -26,6 +49,19 @@ void setup() {
 	restartNormal = loadImage("img/restartNormal.png");
 	restartHovered = loadImage("img/restartHovered.png");
 	soil8x24 = loadImage("img/soil8x24.png");
+  groundhogIdle = loadImage("img/groundhogIdle.png");
+  groundhogDown = loadImage("img/groundhogDown.png");
+  groundhogLeft = loadImage("img/groundhogLeft.png");
+  groundhogRight = loadImage("img/groundhogRight.png");
+  soil0 = loadImage("img/soil0.png");
+  soil1 = loadImage("img/soil1.png");
+  soil2 = loadImage("img/soil2.png");
+  soil3 = loadImage("img/soil3.png");
+  soil4 = loadImage("img/soil4.png");
+  soil5 = loadImage("img/soil5.png");
+  stone1 = loadImage("img/stone1.png");
+  stone2 = loadImage("img/stone2.png");
+  life = loadImage("img/life.png");
 }
 
 void draw() {
@@ -82,11 +118,87 @@ void draw() {
 		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
-		image(soil8x24, 0, 160);
+		for(int x=0; x<width; x+=80){
+      for(int y=soilY; y<soilY+soilRange; y+=80){
+        image(soil0, x, y);
+      }
+      for(int y=soilY+soilRange; y<soilY+(2*soilRange); y+=80){
+        image(soil1, x, y);
+      }
+      for(int y=soilY+(2*soilRange); y<soilY+(3*soilRange); y+=80){
+        image(soil2, x, y);
+      }
+      for(int y=soilY+(3*soilRange); y<soilY+(4*soilRange); y+=80){
+        image(soil3, x, y);
+      }
+      for(int y=soilY+(4*soilRange); y<soilY+(5*soilRange); y+=80){
+        image(soil4, x, y);
+      }
+      for(int y=soilY+(5*soilRange); y<soilY+(6*soilRange); y+=80){
+        image(soil5, x, y);
+      }
+    }
+    //Stone
+    for(int i=0; i<stoneCount1; i++){
+      stoneX = i*80;
+      image(stone1, stoneX, stoneY);
+      stoneY += 80;
+    }
 
 		// Player
+      
+      //no move
+      if(down == 0 && left == 0 && right == 0){
+        image(groundhogIdle, groundhogX, groundhogY);
+      }
+      
+      //down
+      if(down > 0){
+        if(down == 1){
+          groundhogY = groundhogY + 80;
+          image(groundhogIdle, groundhogX, groundhogY);
+          groundhogSpeed = 1;
+        }else{
+          image(groundhogDown, groundhogX, groundhogY+80/15*groundhogSpeed);
+          groundhogSpeed += 1;
+        }
+        down -= 1;
+      }
+      
+      //left
+      if(left > 0){
+        if(left == 1){
+          groundhogX = groundhogX - 80;
+          image(groundhogIdle, groundhogX, groundhogY);
+          groundhogSpeed = 1;
+        }else{
+          image(groundhogLeft, groundhogX-80/15*groundhogSpeed, groundhogY);
+          groundhogSpeed += 1;
+        }
+        left -= 1;
+      }
+      
+      //right
+        if(right > 0){
+        if(right == 1){
+          groundhogX = groundhogX + 80;
+          image(groundhogIdle, groundhogX, groundhogY);
+          groundhogSpeed = 1;
+        }else{
+          image(groundhogRight, groundhogX+80/15*groundhogSpeed, groundhogY);
+          groundhogSpeed += 1;
+        }
+        right -= 1;
+      }
+      
+    //Soldier
+    
+    
 
 		// Health UI
+    for(int i=0; i<playerHealth; i++){
+      image(life, 10+i*70, 10);
+    }
 
 		break;
 
@@ -121,7 +233,34 @@ void draw() {
 
 void keyPressed(){
 	// Add your moving input code here
+  if(down>0 || left>0 || right>0){
+    return;
+  }
+  
+  if(key == CODED){
+    switch(keyCode){
+      case DOWN:
+      if(groundhogY < 400){
+        down = 15;
+      }
+      break;
+        
+      case LEFT:
+      if(groundhogX > 0){
+        left = 15;
+      }
+      break;
+      
+      case RIGHT:
+      if(groundhogX < 560){
+        right = 15;
+      }
+      break;
+        
+    }
+  }
 
+  
 	// DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
     switch(key){
       case 'w':
