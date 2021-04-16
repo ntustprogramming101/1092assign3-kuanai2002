@@ -8,7 +8,9 @@ final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
-PImage bg, soil8x24;
+PImage bg, soil8x24, life;
+
+int hp = 2;
 
 //soil
 PImage soil0, soil1, soil2, soil3, soil4, soil5;
@@ -61,6 +63,7 @@ void setup() {
   soil5 = loadImage("img/soil5.png");
   stone1 = loadImage("img/stone1.png");
   stone2 = loadImage("img/stone2.png");
+  life = loadImage("img/life.png");
 }
 
 void draw() {
@@ -145,6 +148,7 @@ void draw() {
     }
 
 		// Player
+      
       //no move
       if(down == 0 && left == 0 && right == 0){
         image(groundhogIdle, groundhogX, groundhogY);
@@ -194,6 +198,9 @@ void draw() {
     
 
 		// Health UI
+    for(int i=0; i<hp; i++){
+      image(life, 10+i*70, 10);
+    }
 
 		break;
 
