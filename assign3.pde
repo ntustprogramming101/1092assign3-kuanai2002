@@ -10,8 +10,6 @@ final int START_BUTTON_Y = 360;
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24, life;
 
-int hp = 5;
-
 //soil
 PImage soil0, soil1, soil2, soil3, soil4, soil5;
 int soilY = 160;
@@ -198,8 +196,7 @@ void draw() {
     
 
 		// Health UI
-    
-    for(int i=0; i<hp; i++){
+    for(int i=0; i<playerHealth; i++){
       image(life, 10+i*70, 10);
     }
 
@@ -262,10 +259,7 @@ void keyPressed(){
         
     }
   }
-  
-  
-  
-  
+
   
 	// DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
     switch(key){
