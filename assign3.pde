@@ -17,10 +17,9 @@ float soilRange = 320;
 
 //stone
 PImage stone1, stone2;
-final int stoneCount1 = 8;
-final int stoneCount2 = 4;
+final int stoneCount = 8;
 int stoneX = 0;
-int stoneY = 160;
+float stoneY = 0;
 
 //move
 int down = 0;
@@ -63,7 +62,7 @@ void setup() {
   stone2 = loadImage("img/stone2.png");
   life = loadImage("img/life.png");
   playerHealth = 2;
-  frameRate(60);
+  
 }
 
 void draw() {
@@ -140,11 +139,46 @@ void draw() {
         image(soil5, x, y);
       }
     }
-    //Stone
-    for(int i=0; i<stoneCount1; i++){
+    //Stone 1
+    for(int i=0; i<stoneCount; i++){
+        stoneX = i*80;
+        stoneY = soilY+i*80;
+        image(stone1, stoneX, stoneY);
+    }
+    
+    //Stone 2
+    for(int i=0; i<stoneCount; i++){
+      if(i==2 || i==6){
       stoneX = i*80;
+        for(int j=0; j<stoneCount; j++){
+          if(j==0 || j==3 || j==4 || j==7){
+            stoneY = (soilY+(2*soilRange))+j*80;
+            image(stone1, -80+stoneX, stoneY);
+            image(stone1, stoneX, stoneY);
+          }
+        }
+      }
+    }
+    
+    for(int i=0; i<stoneCount; i++){
+      if(i==0 || i==3 || i==4 || i==7){
+      stoneX = i*80;
+        for(int j=0; j<stoneCount; j++){
+          if(j==2 || j==6){
+            stoneY = (soilY+(2*soilRange))+j*80;
+            image(stone1, stoneX, stoneY-80);
+            image(stone1, stoneX, stoneY);
+          }
+        }
+      }
+    }
+    
+    //Stone 3
+    for(int i=0; i<stoneCount; i++){
+      stoneX = i*80;
+      stoneY = soilY+(6*soilRange)-i*80;
       image(stone1, stoneX, stoneY);
-      stoneY += 80;
+      image(stone1, stoneX, stoneY-80);
     }
 
 		// Player
@@ -157,24 +191,24 @@ void draw() {
       //down
       if(down > 0){
         if(down == 1){
-          if(soilY > -1439){
+          if(soilY >= -1440){
             image(groundhogIdle, groundhogX, groundhogY);
             groundhogSpeed = 1;
           }else{
             groundhogY = groundhogY+80;
           }
         }else{
-          if(soilY > -1439){
+          if(soilY >= -1440){
             image(groundhogDown, groundhogX, groundhogY);
             groundhogSpeed += 1;
-            soilY -= 80.0/14.0;
-            println(soilY);
+            soilY -= 80/14.0;
           }else{
             image(groundhogDown, groundhogX, groundhogY+80/15*groundhogSpeed);
             groundhogSpeed += 1;
           }
         }
         down -= 1;
+        println(soilY);
       }
       
       //left
