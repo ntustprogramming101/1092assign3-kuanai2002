@@ -152,7 +152,7 @@ void draw() {
       stoneX = i*80;
         for(int j=0; j<stoneCount; j++){
           if(j==0 || j==3 || j==4 || j==7){
-            stoneY = (soilY+(2*soilRange))+j*80;
+            stoneY = soilY+(2*soilRange)+j*80;
             image(stone1, -80+stoneX, stoneY);
             image(stone1, stoneX, stoneY);
           }
@@ -165,7 +165,7 @@ void draw() {
       stoneX = i*80;
         for(int j=0; j<stoneCount; j++){
           if(j==2 || j==6){
-            stoneY = (soilY+(2*soilRange))+j*80;
+            stoneY = soilY+(2*soilRange)+j*80;
             image(stone1, stoneX, stoneY-80);
             image(stone1, stoneX, stoneY);
           }
@@ -175,10 +175,24 @@ void draw() {
     
     //Stone 3
     for(int i=0; i<stoneCount; i++){
-      stoneX = i*80;
-      stoneY = soilY+(6*soilRange)-i*80;
+      stoneX = -480+(i*80);
+      stoneY = soilY+(6*soilRange)-80-i*80;
       image(stone1, stoneX, stoneY);
-      image(stone1, stoneX, stoneY-80);
+      image(stone1, stoneX+80, stoneY);
+      image(stone1, stoneX+240, stoneY);
+      image(stone1, stoneX+320, stoneY);
+      image(stone1, stoneX+480, stoneY);
+      image(stone1, stoneX+560, stoneY);
+      image(stone1, stoneX+720, stoneY);
+      image(stone1, stoneX+800, stoneY);
+      image(stone1, stoneX+960, stoneY);
+      image(stone1, stoneX+1040, stoneY);
+      image(stone2, stoneX+80, stoneY);
+      image(stone2, stoneX+320, stoneY);
+      image(stone2, stoneX+560, stoneY);
+      image(stone2, stoneX+800, stoneY);
+      image(stone2, stoneX+1040, stoneY);
+      
     }
 
 		// Player
