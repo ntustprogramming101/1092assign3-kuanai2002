@@ -222,7 +222,7 @@ void draw() {
           }
         }
         down -= 1;
-        println(soilY);
+        println(groundhogY);
       }
       
       //left
