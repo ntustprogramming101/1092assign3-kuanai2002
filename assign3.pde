@@ -211,20 +211,22 @@ void draw() {
     }
     
     //cabbage
-    image(cabbage, cabbageX, soilY+cabbageY);
-            
-      if(cabbageX == groundhogX && soilY+cabbageY == groundhogY){
-        cabbageX = -80;
-        cabbageY = soilY-160;
-        playerHealth ++;
-      }
-      
+    if(groundhogX < cabbageX+80 && groundhogX+80 > cabbageX
+      && groundhogY < cabbageY+soilY+80 && groundhogY+80 > cabbageY+soilY){
+      cabbageX = -80;
+      cabbageY = soilY-160;
+      playerHealth ++;
+    }
+     image(cabbage, cabbageX, soilY+cabbageY);
+     println(groundhogY);
+     println(cabbageY+soilY-80);
     //soldier
-      if(groundhogX < soldierX && groundhogX+80 > soldierX -80
-      && groundhogY < soldierY+soilY+80 && groundhogY+80 > soldierY+soilY){
+      if(groundhogX < soldierX && groundhogX+80 > soldierX-80
+      && groundhogY < soldierY+soilY+79 && groundhogY+80 > soldierY+soilY){
         playerHealth --;
         groundhogX = 320;
         groundhogY = 80;
+        soilY = 160;
         image(groundhogIdle, 320, 80);
         if(playerHealth == 0){
           gameState = GAME_OVER;
