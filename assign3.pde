@@ -8,7 +8,7 @@ final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
-PImage bg, soil8x24, life;
+PImage bg, soil8x24, life, cabbage, soldier;
 
 //soil
 PImage soil0, soil1, soil2, soil3, soil4, soil5;
@@ -31,6 +31,17 @@ PImage groundhogIdle, groundhogDown, groundhogLeft, groundhogRight;
 float groundhogX = 320;
 float groundhogY = 80;
 float groundhogSpeed = 1;
+
+//soildier
+int soldierX = 80;
+float soldierY = floor(random(4))*80;
+float soldierWidth = 80;
+float soldierHeight = 80;
+float soldierSpeed;
+
+//cabbage
+int cabbageX = floor(random(8))*80;
+float cabbageY = floor(random(4))*80;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -61,8 +72,10 @@ void setup() {
   stone1 = loadImage("img/stone1.png");
   stone2 = loadImage("img/stone2.png");
   life = loadImage("img/life.png");
+  cabbage = loadImage("img/cabbage.png");
+  soldier = loadImage("img/soldier.png");
   playerHealth = 2;
-  
+  soldierSpeed = 5;
 }
 
 void draw() {
@@ -116,7 +129,7 @@ void draw() {
 		// Grass
 		fill(124, 204, 25);
 		noStroke();
-		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
+		rect(0, soilY - GRASS_HEIGHT, width, GRASS_HEIGHT);
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
 		for(int x=0; x<width; x+=80){
@@ -139,6 +152,8 @@ void draw() {
         image(soil5, x, y);
       }
     }
+    
+      
     //Stone 1
     for(int i=0; i<stoneCount; i++){
         stoneX = i*80;
@@ -194,9 +209,33 @@ void draw() {
       image(stone2, stoneX+1040, stoneY);
       
     }
+    
+    //cabbage
+    image(cabbage, cabbageX, soilY+cabbageY);
+            
+      if(cabbageX == groundhogX && soilY+cabbageY == groundhogY){
+        cabbageX = -80;
+        cabbageY = soilY-160;
+        playerHealth ++;
+      }
+      
+    //soldier
+      if(groundhogX < soldierX && groundhogX+80 > soldierX -80
+      && groundhogY < soldierY+soilY+80 && groundhogY+80 > soldierY+soilY){
+        playerHealth --;
+        groundhogX = 320;
+        groundhogY = 80;
+        image(groundhogIdle, 320, 80);
+        if(playerHealth == 0){
+          gameState = GAME_OVER;
+        }
+      }
+      
+      image(soldier, soldierX - 80, soldierY+soilY);
+      soldierX += soldierSpeed;
+      soldierX %= 640+80;
 
 		// Player
-      
       //no move
       if(down == 0 && left == 0 && right == 0){
         image(groundhogIdle, groundhogX, groundhogY);
@@ -251,10 +290,6 @@ void draw() {
         }
         right -= 1;
       }
-      
-    //Soldier
-    
-    
 
 		// Health UI
     for(int i=0; i<playerHealth; i++){
@@ -276,6 +311,12 @@ void draw() {
 				gameState = GAME_RUN;
 				mousePressed = false;
 				// Remember to initialize the game here!
+        playerHealth = 2;
+          image(groundhogIdle, groundhogX, groundhogY);
+          cabbageX = floor(random(8))*80;
+          cabbageY = floor(random(4))*80;
+          soldierY = floor(random(4))*80;
+          soilY = 160;
 			}
 		}else{
 
