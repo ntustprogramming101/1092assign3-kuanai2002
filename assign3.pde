@@ -210,6 +210,8 @@ void draw() {
             groundhogSpeed = 1;
           }else{
             groundhogY = groundhogY+80;
+            image(groundhogIdle, groundhogX, groundhogY);
+            groundhogSpeed = 1;
           }
         }else{
           if(soilY >= -1440){
@@ -222,7 +224,6 @@ void draw() {
           }
         }
         down -= 1;
-        println(groundhogY);
       }
       
       //left
