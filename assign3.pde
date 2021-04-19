@@ -218,8 +218,7 @@ void draw() {
       playerHealth ++;
     }
      image(cabbage, cabbageX, soilY+cabbageY);
-     println(groundhogY);
-     println(cabbageY+soilY-80);
+     
     //soldier
       if(groundhogX < soldierX && groundhogX+80 > soldierX-80
       && groundhogY < soldierY+soilY+79 && groundhogY+80 > soldierY+soilY){
